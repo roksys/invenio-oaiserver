@@ -12,4 +12,6 @@ isort -rc -c -df && \
 check-manifest --ignore ".travis-*" && \
 sphinx-build -qnNW docs docs/_build/html && \
 #python setup.py test
-pytest tests/test_examples_app.py::test_example_app
+#pytest tests/test_examples_app.py::test_example_app
+./examples/app-setup.sh && ./examples/app-fixtures.sh
+FLASK_APP=app.py flask run --debugger -p 5000
