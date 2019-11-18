@@ -26,14 +26,18 @@ def example_app():
     os.chdir(exampleappdir)
     # setup example
     cmd = './app-setup.sh'
+    print('Running {}'.format(cmd))
     exit_status = subprocess.call(cmd, shell=True)
     assert exit_status == 0
     # setup example
     cmd = './app-fixtures.sh'
+    print('Running {}'.format(cmd))
     exit_status = subprocess.call(cmd, shell=True)
+    print('CMD {} exit code {}'.format(cmd, exit_status))
     assert exit_status == 0
     # Starting example web app
     cmd = 'FLASK_APP=app.py flask run --debugger -p 5000'
+    print('Running {}'.format(cmd))
     webapp = subprocess.Popen(cmd, stdout=subprocess.PIPE,
                               preexec_fn=os.setsid, shell=True)
     time.sleep(60)
@@ -51,8 +55,6 @@ def example_app():
 def test_example_app(example_app):
     """Test example app."""
     # Testing open index page
-    print('test1')
     cmd = 'curl http://0.0.0.0:5000/admin/oaiset/'
     output = subprocess.check_output(cmd, shell=True).decode('utf-8')
-    print('test2')
     assert '<title>OAI-PMH - Sets - Test</title>' in output
